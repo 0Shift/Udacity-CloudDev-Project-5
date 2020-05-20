@@ -47,10 +47,6 @@ export class TodoAccess {
     }
 
     
-    async generateUpdateUrl(todo: TodoItem): Promise<TodoItem> {
-            return todo 
-    }
-
     async updateTodo(todo: TodoItem): Promise<TodoItem> {
             return todo 
     }   
