@@ -1,30 +1,38 @@
 import * as uuid from 'uuid'
 
-import { Group } from '../models/Group'
-import { GroupAccess } from '../dataLayer/groupsAccess'
-import { CreateGroupRequest } from '../requests/CreateGroupRequest'
+import { TodoItem } from '../models/TodoItem'
+import { TodoAccess } from '../dataLayer/TodoAccess'
+import { CreateTodoRequest} from '../requests/CreateTodoRequest'
 import { parseUserId } from '../auth/utils'
 
-const groupAccess = new GroupAccess()
+const todoAccess = new TodoAccess()
 
-export async function getAllGroups(): Promise<Group[]> {
-  return groupAccess.getAllGroups()
+export async function getTodos(): Promise<TodoItem[]> {
+  return todoAccess.getTodos()
 }
 
-export async function createGroup(
-  createGroupRequest: CreateGroupRequest,
+export async function createTodo(
+  createTodoRequest: CreateTodoRequest,
   jwtToken: string
-): Promise<Group> {
+): Promise<TodoItem> {
 
   const itemId = uuid.v4()
   const userId = parseUserId(jwtToken)
 
-  return await groupAccess.createGroup({
-    id: itemId,
+  return await todoAccess.createTodo({
     userId: userId,
-    name: createGroupRequest.name,
-    description: createGroupRequest.description,
-    timestamp: new Date().toISOString()
+    todoId: itemId,
+    createdAt: new Date().toISOString(),
+    name: createTodoRequest.name,
+    dueDate: createTodoRequest.dueDate,
+    done: false,
+    // userId: string
+    // todoId: string
+    // createdAt: string
+    // name: string
+    // dueDate: string
+    // done: boolean
+    // attachmentUrl?: string
   })
 }
 

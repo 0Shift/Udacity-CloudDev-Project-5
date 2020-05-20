@@ -16,7 +16,8 @@ provider:
     TODOS_TABLE: Todo-${self:provider.stage}
     AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
     AUTH_0_SECRET_FIELD: auth0Secret
-    USER_INDEX: 
+    USER_INDEX: UserIndex
+
 
 
 functions:
