@@ -2,13 +2,17 @@ import * as uuid from 'uuid'
 
 import { TodoItem } from '../models/TodoItem'
 import { TodoAccess } from '../dataLayer/TodoAccess'
+import { BucketAccess } from '../dataLayer/BucketAccess'
 import { CreateTodoRequest} from '../requests/CreateTodoRequest'
+import {UpdateTodoRequest} from '../requests/UpdateTodoRequest'
 import { parseUserId } from '../auth/utils'
 
 const todoAccess = new TodoAccess()
+const bucketAccess = new BucketAccess()
 
-export async function getTodos(): Promise<TodoItem[]> {
-  return todoAccess.getTodos()
+export async function getTodos(jwtToken: string): Promise<TodoItem[]> {
+    const userId = parseUserId(jwtToken)
+    return todoAccess.getTodos(userId)
 }
 
 export async function createTodo(
@@ -36,12 +40,14 @@ export async function createTodo(
   })
 }
 
-export async function deleteTodo(){
-
+export async function deleteTodo(todoId: string){
+    return await todoAccess.deleteTodo(todoId)
 }
 
-export async function generateUploadUrl(){
-
+export async function generateUploadUrl(todoId: string, jwtToken: string){
+    const userId = parseUserId(jwtToken)
+    const generatedUrl = await bucketAccess.generateUploadUrl(todoId, userId);
+    return generatedUrl
 }
 
 export async function updateTodo(){
