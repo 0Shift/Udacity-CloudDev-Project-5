@@ -8,6 +8,7 @@ export class BucketAccess {
 
     constructor(
         private readonly docClient: DocumentClient = createDynamoDBClient(),
+        private readonly s3 = createS3Bucket(),
         private readonly imgBucket = process.env.IMAGES_S3_BUCKET,
         private readonly todoTable = process.env.TODOS_TABLE,
         private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION
@@ -15,7 +16,7 @@ export class BucketAccess {
     }
 
     async generateUploadUrl(todoId: string, userId: string): Promise<string> {
-        const uploadUrl = this.imgBucket.getSignedUrl("putObject", {
+        const uploadUrl = this.s3.getSignedUrl("putObject", {
           Bucket: this.imgBucket,
           Key: todoId,
           Expires: this.urlExpiration
@@ -46,4 +47,10 @@ function createDynamoDBClient() {
   }
 
   return new XAWS.DynamoDB.DocumentClient()
+}
+
+function createS3Bucket(){
+    return new XAWS.S3({
+        signatureVersion: 'v4'
+      })
 }

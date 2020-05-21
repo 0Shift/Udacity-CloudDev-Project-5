@@ -13,7 +13,7 @@ provider:
   region: ${opt:region, 'us-east-2'}
 
   enviroment:
-    TODOS_TABLE: Todo-${self:provider.stage}
+    TODO_TABLE: Todo-${self:provider.stage}
     AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
     AUTH_0_SECRET_FIELD: auth0Secret
     USER_INDEX: UserIndex
