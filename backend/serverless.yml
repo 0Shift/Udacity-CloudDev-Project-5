@@ -17,6 +17,7 @@ provider:
     AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
     AUTH_0_SECRET_FIELD: auth0Secret
     USER_INDEX: UserIndex
+    SIGNED_URL_EXPIRATION: 300
 
 
 

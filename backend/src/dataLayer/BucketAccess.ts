@@ -9,28 +9,29 @@ export class BucketAccess {
     constructor(
         private readonly docClient: DocumentClient = createDynamoDBClient(),
         private readonly imgBucket = process.env.IMAGES_S3_BUCKET,
+        private readonly todoTable = process.env.TODOS_TABLE,
+        private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION
         ) {
     }
 
     async generateUploadUrl(todoId: string, userId: string): Promise<string> {
-    //     const uploadUrl = this.imgBucket.getSignedUrl("putObject", {
-    //       Bucket: this.bucket,
-    //       Key: todoId,
-    //       Expires: this.urlExp
-    //   });
-    //   await this.docClient.update({
-    //         TableName: this.todosTable,
-    //         Key: { userId, todoId },
-    //         UpdateExpression: "set attachmentUrl=:URL",
-    //         ExpressionAttributeValues: {
-    //           ":URL": uploadUrl.split("?")[0]
-    //       },
-    //       ReturnValues: "UPDATED_NEW"
-    //     })
-    //     .promise();
+        const uploadUrl = this.imgBucket.getSignedUrl("putObject", {
+          Bucket: this.imgBucket,
+          Key: todoId,
+          Expires: this.urlExpiration
+      });
+      await this.docClient.update({
+            TableName: this.todoTable,
+            Key: { userId, todoId },
+            UpdateExpression: "set attachmentUrl=:URL",
+            ExpressionAttributeValues: {
+              ":URL": uploadUrl.split("?")[0]
+          },
+          ReturnValues: "UPDATED_NEW"
+        })
+        .promise();
   
-    //   return uploadUrl;
-    return ""
+      return uploadUrl;
     }
 
 }
