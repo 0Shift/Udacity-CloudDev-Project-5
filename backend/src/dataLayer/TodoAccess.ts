@@ -5,6 +5,8 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 const XAWS = AWSXRay.captureAWS(AWS)
 
 import { TodoItem } from '../models/TodoItem'
+import { TodoUpdate} from '../models/TodoUpdate'
+
 
 export class TodoAccess {
 
@@ -17,7 +19,6 @@ export class TodoAccess {
 
     async getTodos(userId: string): Promise<TodoItem[]> {
         console.log('Getting all todos')
-
         const result = await this.docClient.query({
             TableName: this.todoTable,
             KeyConditionExpression: 'userId = :userId',
@@ -52,11 +53,11 @@ export class TodoAccess {
     }
 
 
-    async updateTodo(todoId: string, userId: string) {
+    async updateTodo(todoUpdate: TodoUpdate) {
         await this.docClient.update({
             TableName: this.todoTable,
             Key: {
-                todoId
+                todoUpdate
             }
             }).promise()
     }   

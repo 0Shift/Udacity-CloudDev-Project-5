@@ -50,7 +50,20 @@ export async function generateUploadUrl(todoId: string, jwtToken: string){
     return generatedUrl
 }
 
-export async function updateTodo(){
-
-}
+export async function updateTodo(
+    updateTodoRequest: UpdateTodoRequest,
+    // jwtToken: string
+  ){
+  
+    // const userId = parseUserId(jwtToken)
+  
+    return await todoAccess.updateTodo({
+        name: updateTodoRequest.name,
+        dueDate: updateTodoRequest.dueDate,
+        done: updateTodoRequest.done
+        // name: string
+        // dueDate: string
+        // done: boolean
+    })
+  }
 
