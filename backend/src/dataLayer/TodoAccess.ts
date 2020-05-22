@@ -12,20 +12,24 @@ export class TodoAccess {
 
     constructor(
         private readonly docClient: DocumentClient = createDynamoDBClient(),
-        private readonly todoTable = process.env.TODOS_TABLE,
+        private readonly todoTable = process.env.TODO_TABLE,
         // private readonly index = process.env.USER_INDEX
         ) {
     }
 
     async getTodos(userId: string): Promise<TodoItem[]> {
-        console.log('Getting all todos')
-        const result = await this.docClient.query({
-            TableName: this.todoTable,
-            KeyConditionExpression: 'userId = :userId',
-            ExpressionAttributeValues: {
-              ':userId': userId
-            }
-        }).promise()
+        console.log('Getting all todos', userId)
+        // const result = await this.docClient.query({
+        //     TableName: this.todoTable,
+        //     KeyConditionExpression: 'userId = :userId',
+        //     ExpressionAttributeValues: {
+        //       ':userId': userId
+        //     }
+        // }).promise()
+
+        const result = await this.docClient.scan({
+            TableName: this.todoTable
+          }).promise()
 
         const items = result.Items
 
