@@ -8,7 +8,6 @@ import { Jwt } from '../../auth/Jwt'
 import { JwtPayload } from '../../auth/JwtPayload'
 
 const logger = createLogger('auth')
-
 const jwksUrl = 'https://test-endpoint.auth0.com/.well-known/jwks.json'
 
 export const handler = async (
@@ -52,11 +51,26 @@ export const handler = async (
 }
 
 async function verifyToken(authHeader: string): Promise<JwtPayload> {
+
+  const response = await Axios.get(jwksUrl);
   const token = getToken(authHeader)
   const jwt: Jwt = decode(token, { complete: true }) as Jwt
 
-  // TODO: Implement token verification
-  return undefined
+  if(!jwt){
+    throw new Error('invalid token')
+  }
+
+  try {
+    console.log(response);
+    var verifedToken = verify(token,response.data,{algorithms:['RS256']})
+    console.log('verfied toekn',verifedToken)
+    return  verifedToken as JwtPayload
+    
+  } catch (error) {
+    console.error(error);
+    return undefined
+  }
+
 }
 
 function getToken(authHeader: string): string {
