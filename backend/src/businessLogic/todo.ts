@@ -44,10 +44,11 @@ export async function generateUploadUrl(todoId: string, jwtToken: string){
 
 export async function updateTodo(
     updateTodoRequest: UpdateTodoRequest,
-    // jwtToken: string
+    todoId: string,
+    jwtToken: string
   ){
   
-    // const userId = parseUserId(jwtToken)
+    const userId = parseUserId(jwtToken)
   
     return await todoAccess.updateTodo({
         name: updateTodoRequest.name,
@@ -56,6 +57,6 @@ export async function updateTodo(
         // name: string
         // dueDate: string
         // done: boolean
-    })
+    }, todoId, userId)
   }
 

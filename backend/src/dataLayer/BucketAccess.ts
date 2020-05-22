@@ -10,7 +10,7 @@ export class BucketAccess {
         private readonly docClient: DocumentClient = createDynamoDBClient(),
         private readonly s3 = createS3Bucket(),
         private readonly imgBucket = process.env.IMAGES_S3_BUCKET,
-        private readonly todoTable = process.env.TODOS_TABLE,
+        private readonly todoTable = process.env.TODO_TABLE,
         private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION
         ) {
     }

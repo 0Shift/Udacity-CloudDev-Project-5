@@ -11,11 +11,12 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   console.log('Processing event: ', event)
 
   const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
-  // const authorization = event.headers.Authorization
-  // const split = authorization.split(' ')
-  // const jwtToken = split[1]
+  const todoId = event.pathParameters.todoId
+  const authorization = event.headers.Authorization
+  const split = authorization.split(' ')
+  const jwtToken = split[1]
 
-  const newItem = await updateTodo(updatedTodo)
+  const newItem = await updateTodo(updatedTodo, todoId, jwtToken)
 
   return {
     statusCode: 201,
