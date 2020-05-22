@@ -31,12 +31,12 @@ provider:
         - dynamodb:Scan
         - dynamodb:PutItem
         - dynamodb:GetItem
-        - dynamodb:Query
+        - dynamodb:DeleteItem
       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
-    # - Effect: Allow
-    #   Action:
-    #     - dynamodb:Query
-    #   Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}/index/${self:provider.environment.USER_INDEX}
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}/index/${self:provider.environment.USER_INDEX}
     - Effect: Allow
       Action:
         - s3:PutObject
@@ -65,7 +65,8 @@ functions:
           method: get
           path: todos
           cors: true
-          authorizer: Auth
+    iamRoleStatementsInherit: true
+
 
 
   # TODO: Configure this function
@@ -77,12 +78,7 @@ functions:
           path: todos
           cors: true
     iamRoleStatementsInherit: true
-    iamRoleStatementsName: ${self:service.name}-create-todo-role-${self:provider.stage}
-    iamRoleStatements:
-      - Effect: Allow
-        Action:
-          - dynamodb:PutItem
-        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}
+
 
   # TODO: Configure this function
   UpdateTodo:
@@ -92,7 +88,7 @@ functions:
           method: patch
           path: todos/{todoId}
           cors: true
-
+    iamRoleStatementsInherit: true
 
   # TODO: Configure this function
   DeleteTodo:
@@ -102,6 +98,7 @@ functions:
           method: delete
           path: todos/{todoId}
           cors: true
+    iamRoleStatementsInherit: true
 
   # TODO: Configure this function
   GenerateUploadUrl:
@@ -111,6 +108,7 @@ functions:
           method: post
           path: todos/{todoId}/attachment
           cors: true
+    iamRoleStatementsInherit: true
 
 resources:
   Resources:

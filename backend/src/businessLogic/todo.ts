@@ -27,16 +27,8 @@ export async function createTodo(
     userId: userId,
     todoId: itemId,
     createdAt: new Date().toISOString(),
-    name: createTodoRequest.name,
-    dueDate: createTodoRequest.dueDate,
     done: false,
-    // userId: string
-    // todoId: string
-    // createdAt: string
-    // name: string
-    // dueDate: string
-    // done: boolean
-    // attachmentUrl?: string
+    ...createTodoRequest
   })
 }
 
