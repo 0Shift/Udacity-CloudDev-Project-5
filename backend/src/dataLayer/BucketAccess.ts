@@ -16,6 +16,7 @@ export class BucketAccess {
     }
 
     async generateUploadUrl(todoId: string, userId: string): Promise<string> {
+        console.log(userId)
         const uploadUrl = this.s3.getSignedUrl("putObject", {
           Bucket: this.imgBucket,
           Key: todoId,
@@ -23,7 +24,7 @@ export class BucketAccess {
       });
       await this.docClient.update({
             TableName: this.todoTable,
-            Key: { userId, todoId },
+            Key: { todoId },
             UpdateExpression: "set attachmentUrl=:URL",
             ExpressionAttributeValues: {
               ":URL": uploadUrl.split("?")[0]

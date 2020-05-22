@@ -59,11 +59,11 @@ export class TodoAccess {
 
 
     async updateTodo(todoUpdate: TodoUpdate, todoId: string, userId: string) {
+        console.log(userId)
         await this.docClient.update({
             TableName: this.todoTable,
             Key: {
-              todoId,
-              userId
+                "todoId": todoId
             },
             UpdateExpression: 'set #name = :n, #dueDate = :due, #done = :d',
             ExpressionAttributeValues: {
@@ -75,7 +75,8 @@ export class TodoAccess {
               '#name': 'name',
               '#dueDate': 'dueDate',
               '#done': 'done'
-            }
+            },
+            ReturnValues: "UPDATED_NEW"
           }).promise();
     }   
 }
