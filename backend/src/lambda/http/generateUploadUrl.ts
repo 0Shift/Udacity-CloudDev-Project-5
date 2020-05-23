@@ -9,8 +9,8 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   const authorization = event.headers.Authorization
   const split = authorization.split(' ')
   const jwtToken = split[1]
-  
-  const uploadUrl = await generateUploadUrl(todoId, jwtToken);
+
+  const uploadUrl = await generateUploadUrl(jwtToken, todoId);
 
   return {
     statusCode: 200,

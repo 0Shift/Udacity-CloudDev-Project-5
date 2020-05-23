@@ -36,7 +36,7 @@ export async function deleteTodo(todoId: string){
     return await todoAccess.deleteTodo(todoId)
 }
 
-export async function generateUploadUrl(todoId: string, jwtToken: string){
+export async function generateUploadUrl(jwtToken: string, todoId: string){
     const userId = parseUserId(jwtToken)
     const generatedUrl = await bucketAccess.generateUploadUrl(todoId, userId);
     return generatedUrl

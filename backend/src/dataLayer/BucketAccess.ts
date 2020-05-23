@@ -15,7 +15,8 @@ export class BucketAccess {
         ) {
     }
 
-    async generateUploadUrl(todoId: string, userId: string): Promise<string> {
+    async generateUploadUrl(userId: string, todoId: string): Promise<string> {
+        console.log(userId)
         const uploadUrl = this.s3.getSignedUrl("putObject", {
           Bucket: this.imgBucket,
           Key: todoId,
