@@ -94,7 +94,7 @@ functions:
           cors: true
           request:
             schema:
-            application/json: ${file(models/createTodo.json)}
+              application/json: ${file(models/createTodo.json)}
     # iamRoleStatementsInherit: true
     iamRoleStatementsName: ${self:service.name}-create-todo-role-${self:provider.stage}
     iamRoleStatements:
