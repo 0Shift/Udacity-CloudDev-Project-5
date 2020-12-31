@@ -4,7 +4,7 @@ To implement this project you need to implement a simple TODO application using 
 
 # Functionality of the application
 
-This appliation will allow to create/remove/update/get TODO items. Each TODO item can optionally have an attachment image. Each user only has access to TODO items that he/she has created. 
+This application will allow to create/remove/update/get TODO items. Each TODO item can optionally have an attachment image. Each user only has access to TODO items that he/she has created. 
 
 # Functions to be implemented
 
@@ -17,11 +17,11 @@ To implement this project you need to implement the following functions and conf
 * `DeleteTodo` - should delete a TODO item created by a current user. Expects an id of a TODO item to remove.
 * `GenerateUploadUrl` - returns a presigned url that can be used to upload an attachment file for a TODO item. 
 
-All functions are already connected to appriate events from API gateway
+All functions are already connected to appropiate events from API gateway
 
 An id of a user can be extracted from a JWT token passed by a client
 
-You also need to add any necessary resources to the `resources` section of the `serverless.yml` file such as DynamoDB table and and S3 bucket.
+You also need to add any necessary resources to the `resources` section of the `serverless.yml` file such as DynamoDB table and S3 bucket.
 
 # Frontend
 
